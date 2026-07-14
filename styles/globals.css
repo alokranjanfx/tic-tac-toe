@@ -1,0 +1,171 @@
+:root {
+  --bg: #0f172a;
+  --panel: #1e293b;
+  --panel-2: #334155;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --x: #38bdf8;
+  --o: #fb7185;
+  --win: #4ade80;
+  --accent: #6366f1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3rem);
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--x), var(--o));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.scoreboard {
+  display: flex;
+  gap: 12px;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 88px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-radius: 12px;
+}
+
+.score span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.score strong {
+  font-size: 1.6rem;
+}
+
+.score-x strong {
+  color: var(--x);
+}
+
+.score-o strong {
+  color: var(--o);
+}
+
+.status {
+  font-size: 1.25rem;
+  font-weight: 600;
+  min-height: 1.5em;
+  margin: 0;
+}
+
+.status-win {
+  color: var(--win);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background: var(--panel);
+  padding: 10px;
+  border-radius: 16px;
+}
+
+.cell {
+  width: 92px;
+  height: 92px;
+  font-size: 2.75rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease;
+}
+
+.cell:hover:not(:disabled) {
+  background: #3f4d63;
+}
+
+.cell:active {
+  transform: scale(0.94);
+}
+
+.cell-x {
+  color: var(--x);
+}
+
+.cell-o {
+  color: var(--o);
+}
+
+.cell-win {
+  background: rgba(74, 222, 128, 0.2);
+  box-shadow: inset 0 0 0 2px var(--win);
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn-primary {
+  background: var(--accent);
+}
+
+.footer {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+@media (max-width: 360px) {
+  .cell {
+    width: 76px;
+    height: 76px;
+    font-size: 2.25rem;
+  }
+}
