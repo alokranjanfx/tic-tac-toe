@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Head from 'next/head';
 
 const WIN_LINES = [
@@ -56,6 +56,23 @@ export default function Home() {
     setScore({ X: 0, O: 0, draws: 0 });
   }
 
+  // Deterministic star field (seeded by index) so server/client markup matches.
+  const stars = useMemo(
+    () =>
+      Array.from({ length: 60 }, (_, i) => {
+        const seed = (i * 9301 + 49297) % 233280;
+        const rnd = seed / 233280;
+        const rnd2 = ((i * 4021 + 12345) % 100) / 100;
+        return {
+          top: `${(rnd * 100).toFixed(2)}%`,
+          left: `${(rnd2 * 100).toFixed(2)}%`,
+          dur: `${(2 + rnd * 4).toFixed(2)}s`,
+          delay: `${(rnd2 * 4).toFixed(2)}s`,
+        };
+      }),
+    []
+  );
+
   let status;
   if (winner) status = `Winner: ${winner.player} 🎉`;
   else if (isDraw) status = "It's a draw! 🤝";
@@ -68,6 +85,19 @@ export default function Home() {
         <meta name="description" content="A Tic Tac Toe game built with Next.js" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
+      <div className="orb orb-1" />
+      <div className="orb orb-2" />
+      <div className="orb orb-3" />
+      <div className="stars" aria-hidden="true">
+        {stars.map((s, i) => (
+          <span
+            key={i}
+            className="star"
+            style={{ top: s.top, left: s.left, '--dur': s.dur, '--delay': s.delay }}
+          />
+        ))}
+      </div>
 
       <main className="page">
         <h1 className="title">Tic Tac Toe</h1>
@@ -101,7 +131,7 @@ export default function Home() {
                 onClick={() => handleClick(i)}
                 aria-label={`Cell ${i + 1}${value ? `, ${value}` : ', empty'}`}
               >
-                {value}
+                {value && <span key={value}>{value}</span>}
               </button>
             );
           })}
